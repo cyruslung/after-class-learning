@@ -1,0 +1,116 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String         @id @default(cuid())
+  name          String
+  createdAt     DateTime       @default(now())
+  gameSessions  GameSession[]
+  progress      Progress[]
+  wrongAnswers  WrongAnswer[]
+}
+
+model Grade {
+  id        String   @id @default(cuid())
+  code      String   @unique // K1, K2, K3, G1-G6
+  name      String
+  category  String   // KINDERGARTEN | ELEMENTARY
+  sortOrder Int
+  units     Unit[]
+}
+
+model Unit {
+  id          String     @id @default(cuid())
+  gradeId     String
+  semester    String     // S1 | S2
+  subject     String     // CHINESE | ENGLISH | MATH
+  name        String
+  description String
+  sortOrder   Int
+  grade       Grade      @relation(fields: [gradeId], references: [id])
+  levels      Level[]
+  progress    Progress[]
+
+  @@unique([gradeId, semester, subject, sortOrder])
+}
+
+model Level {
+  id           String        @id @default(cuid())
+  unitId       String
+  name         String
+  sortOrder    Int
+  unit         Unit          @relation(fields: [unitId], references: [id])
+  questions    Question[]
+  gameSessions GameSession[]
+
+  @@unique([unitId, sortOrder])
+}
+
+enum QuestionType {
+  MULTIPLE_CHOICE
+  TRUE_FALSE
+  FILL_BLANK
+  MATCHING
+  ORDERING
+}
+
+model Question {
+  id          String       @id @default(cuid())
+  levelId     String
+  type        QuestionType
+  prompt      String
+  options     String?      // JSON string for choices / matching pairs / ordering items
+  answer      String       // JSON string
+  explanation String
+  sortOrder   Int
+  level       Level        @relation(fields: [levelId], references: [id])
+  wrongAnswers WrongAnswer[]
+
+  @@unique([levelId, sortOrder])
+}
+
+model GameSession {
+  id             String   @id @default(cuid())
+  userId         String
+  levelId        String
+  correctCount   Int
+  totalCount     Int
+  score          Int
+  stars          Int
+  coins          Int
+  answers        String   // JSON: array of { questionId, userAnswer, isCorrect }
+  completedAt    DateTime @default(now())
+  user           User     @relation(fields: [userId], references: [id])
+  level          Level    @relation(fields: [levelId], references: [id])
+}
+
+model Progress {
+  id              String @id @default(cuid())
+  userId          String
+  unitId          String
+  completedLevels Int    @default(0)
+  totalStars      Int    @default(0)
+  user            User   @relation(fields: [userId], references: [id])
+  unit            Unit   @relation(fields: [unitId], references: [id])
+
+  @@unique([userId, unitId])
+}
+
+model WrongAnswer {
+  id          String   @id @default(cuid())
+  userId      String
+  questionId  String
+  userAnswer  String
+  reviewed    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  user        User     @relation(fields: [userId], references: [id])
+  question    Question @relation(fields: [questionId], references: [id])
+
+  @@index([userId, reviewed])
+}
