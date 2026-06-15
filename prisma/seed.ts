@@ -6,14 +6,10 @@ const prisma = new PrismaClient();
 const DEMO_USER_ID = "demo-user";
 
 async function main() {
-  await prisma.wrongAnswer.deleteMany();
-  await prisma.gameSession.deleteMany();
-  await prisma.progress.deleteMany();
-  await prisma.question.deleteMany();
-  await prisma.level.deleteMany();
-  await prisma.unit.deleteMany();
-  await prisma.grade.deleteMany();
-  await prisma.user.deleteMany();
+  // PostgreSQL：用 TRUNCATE 一次清空，避免外鍵刪除順序問題
+  await prisma.$executeRawUnsafe(`
+    TRUNCATE "WrongAnswer", "GameSession", "Progress", "Question", "Level", "Unit", "Grade", "User" CASCADE;
+  `);
 
   await prisma.user.create({
     data: { id: DEMO_USER_ID, name: "小學霸" },
