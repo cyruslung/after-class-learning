@@ -6,6 +6,8 @@ import { DEMO_USER_ID } from "@/lib/constants";
 import { type SessionAnswer } from "@/lib/game";
 import { prisma } from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 interface PageProps {
   searchParams: Promise<{ session?: string }>;
 }

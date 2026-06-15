@@ -1,5 +1,6 @@
 import { BigButton } from "@/components/BigButton";
 import { PageTitle } from "@/components/PageTitle";
+import { ZhuyinText } from "@/components/ZhuyinText";
 
 export default function HomePage() {
   return (
@@ -11,7 +12,9 @@ export default function HomePage() {
       />
       <div className="mt-4 flex flex-col items-center gap-4">
         <p className="max-w-md text-center text-base text-muted sm:text-lg">
-          選擇年級、學期與科目，透過有趣的答題闖關，輕鬆預習與複習國語、英文、數學！
+          <ZhuyinText>
+            選擇年級、學期與科目，透過有趣的答題闖關，輕鬆預習與複習國語、英文、數學！
+          </ZhuyinText>
         </p>
         <BigButton href="/select-grade">開始學習 🚀</BigButton>
       </div>

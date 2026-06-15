@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { withZhuyin } from "@/components/ZhuyinText";
 
 interface BigButtonProps {
   href?: string;
@@ -26,18 +27,19 @@ export function BigButton({
   className = "",
 }: BigButtonProps) {
   const baseClass = `inline-flex min-h-[3rem] items-center justify-center rounded-2xl border-2 px-8 py-3 text-lg font-bold shadow-sm transition hover:scale-[1.02] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50 sm:min-h-[3.5rem] sm:px-10 sm:text-xl ${variants[variant]} ${className}`;
+  const content = withZhuyin(children);
 
   if (href && !disabled) {
     return (
       <Link href={href} className={baseClass}>
-        {children}
+        {content}
       </Link>
     );
   }
 
   return (
     <button type={type} onClick={onClick} disabled={disabled} className={baseClass}>
-      {children}
+      {content}
     </button>
   );
 }

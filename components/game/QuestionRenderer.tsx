@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { QuestionType } from "@prisma/client";
 import { BigButton } from "@/components/BigButton";
+import { ZhuyinText } from "@/components/ZhuyinText";
 import {
   CORRECT_MESSAGES,
   STREAK_REWARD_MESSAGE,
@@ -50,19 +51,19 @@ export function QuestionRenderer({
         <span className="flex items-center gap-2">
           {funLabel ? (
             <span className="rounded-full bg-purple-100 px-2 py-0.5 text-purple-700">
-              {funLabel}
+              <ZhuyinText>{funLabel}</ZhuyinText>
             </span>
           ) : (
-            getQuestionTypeLabel(question.type)
+            <ZhuyinText>{getQuestionTypeLabel(question.type)}</ZhuyinText>
           )}
         </span>
         <span>
-          第 {currentIndex + 1} 題 / 共 {totalCount} 題
+          第 {currentIndex + 1} <ZhuyinText>題</ZhuyinText> / 共 {totalCount} <ZhuyinText>題</ZhuyinText>
         </span>
       </div>
 
       <h2 className="mb-6 text-lg font-bold leading-relaxed text-foreground sm:text-xl">
-        {question.prompt}
+        <ZhuyinText>{question.prompt}</ZhuyinText>
       </h2>
 
       {isInteractiveType(question.type) ? (
@@ -118,7 +119,7 @@ function MultipleChoiceInput({
           onClick={() => onSubmit(choice)}
           className="min-h-[3.5rem] rounded-2xl border-2 border-blue-200 bg-blue-50 px-4 py-3 text-lg font-bold transition hover:scale-[1.02] hover:bg-blue-100 active:scale-[0.98]"
         >
-          {choice}
+          <ZhuyinText>{choice}</ZhuyinText>
         </button>
       ))}
     </div>
@@ -133,14 +134,14 @@ function TrueFalseInput({ onSubmit }: { onSubmit: (userAnswer: string) => void }
         onClick={() => onSubmit("true")}
         className="min-h-[4rem] rounded-2xl border-2 border-green-200 bg-green-50 text-xl font-bold transition hover:bg-green-100"
       >
-        ✓ 是
+        ✓ <ZhuyinText>是</ZhuyinText>
       </button>
       <button
         type="button"
         onClick={() => onSubmit("false")}
         className="min-h-[4rem] rounded-2xl border-2 border-red-200 bg-red-50 text-xl font-bold transition hover:bg-red-100"
       >
-        ✗ 否
+        ✗ <ZhuyinText>否</ZhuyinText>
       </button>
     </div>
   );
@@ -215,11 +216,13 @@ function MatchingInput({
   return (
     <div>
       <p className="mb-4 text-center text-sm text-purple-700">
-        👆 先點左邊，再點右邊完成配對！點已配對的項目可取消
+        👆 <ZhuyinText>先點左邊，再點右邊完成配對！點已配對的項目可取消</ZhuyinText>
       </p>
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="space-y-2">
-          <p className="text-xs font-bold text-muted">左邊</p>
+          <p className="text-xs font-bold text-muted">
+            <ZhuyinText>左邊</ZhuyinText>
+          </p>
           {left.map((item) => (
             <button
               key={item}
@@ -233,12 +236,20 @@ function MatchingInput({
                     : "border-blue-200 bg-blue-50 hover:bg-blue-100"
               }`}
             >
-              {pairs[item] ? `${item} → ${pairs[item]}` : item}
+              {pairs[item] ? (
+                <>
+                  <ZhuyinText>{`${item} → ${pairs[item]}`}</ZhuyinText>
+                </>
+              ) : (
+                <ZhuyinText>{item}</ZhuyinText>
+              )}
             </button>
           ))}
         </div>
         <div className="space-y-2">
-          <p className="text-xs font-bold text-muted">右邊</p>
+          <p className="text-xs font-bold text-muted">
+            <ZhuyinText>右邊</ZhuyinText>
+          </p>
           {right.map((item) => (
             <button
               key={item}
@@ -251,7 +262,7 @@ function MatchingInput({
                   : "border-pink-200 bg-pink-50 hover:bg-pink-100"
               }`}
             >
-              {item}
+              <ZhuyinText>{item}</ZhuyinText>
             </button>
           ))}
         </div>
@@ -294,17 +305,19 @@ function OrderingInput({
   return (
     <div>
       <p className="mb-4 text-center text-sm text-purple-700">
-        👆 依正確順序點選項目，排好的會出現在下方
+        👆 <ZhuyinText>依正確順序點選項目，排好的會出現在下方</ZhuyinText>
       </p>
       {order.length > 0 && (
         <div className="mb-4 flex flex-wrap items-center gap-2 rounded-xl border-2 border-green-200 bg-green-50 p-3">
-          <span className="text-xs font-bold text-green-700">你的順序：</span>
+          <span className="text-xs font-bold text-green-700">
+            <ZhuyinText>你的順序：</ZhuyinText>
+          </span>
           {order.map((item, i) => (
             <span
               key={`${item}-${i}`}
               className="rounded-lg bg-white px-3 py-1 text-sm font-bold shadow-sm"
             >
-              {i + 1}. {item}
+              {i + 1}. <ZhuyinText>{item}</ZhuyinText>
             </span>
           ))}
         </div>
@@ -317,7 +330,7 @@ function OrderingInput({
             onClick={() => addItem(item)}
             className="min-h-[3rem] rounded-xl border-2 border-amber-200 bg-amber-50 px-2 py-2 text-sm font-bold transition hover:scale-[1.02] hover:bg-amber-100 sm:text-base"
           >
-            {item}
+            <ZhuyinText>{item}</ZhuyinText>
           </button>
         ))}
       </div>
@@ -328,7 +341,7 @@ function OrderingInput({
           disabled={order.length === 0}
           className="rounded-xl border-2 border-gray-200 px-4 py-2 text-sm font-bold disabled:opacity-40"
         >
-          取消上一個
+          <ZhuyinText>取消上一個</ZhuyinText>
         </button>
         <button
           type="button"
@@ -336,7 +349,7 @@ function OrderingInput({
           disabled={order.length === 0}
           className="rounded-xl border-2 border-gray-200 px-4 py-2 text-sm font-bold disabled:opacity-40"
         >
-          全部重來
+          <ZhuyinText>全部重來</ZhuyinText>
         </button>
       </div>
       <div className="mt-6">
@@ -362,13 +375,14 @@ function PlaceholderInput({
   return (
     <div className="rounded-2xl border-2 border-dashed border-gray-300 bg-gray-50 p-6 text-center">
       <p className="mb-2 text-lg font-bold text-muted">
-        {getQuestionTypeLabel(question.type)} — 即將推出
+        <ZhuyinText>{getQuestionTypeLabel(question.type)}</ZhuyinText> — <ZhuyinText>即將推出</ZhuyinText>
       </p>
       <p className="mb-4 text-sm text-muted">
-        此題型 UI 尚在開發中，MVP 先以跳過方式繼續。
+        <ZhuyinText>此題型 UI 尚在開發中，MVP 先以跳過方式繼續。</ZhuyinText>
       </p>
       <p className="mb-4 text-sm text-muted">
-        正確答案：{formatAnswerForDisplay(question.type, question.answer)}
+        <ZhuyinText>正確答案：</ZhuyinText>
+        <ZhuyinText>{formatAnswerForDisplay(question.type, question.answer)}</ZhuyinText>
       </p>
       <BigButton onClick={() => onSubmit("")} variant="outline">
         跳過此題
@@ -407,35 +421,48 @@ export function FeedbackPanel({
       }`}
     >
       <p className="text-2xl font-extrabold sm:text-3xl">
-        {isCorrect ? `🎉 ${message}` : `💪 ${message}`}
+        {isCorrect ? (
+          <>
+            🎉 <ZhuyinText>{message}</ZhuyinText>
+          </>
+        ) : (
+          <>
+            💪 <ZhuyinText>{message}</ZhuyinText>
+          </>
+        )}
       </p>
 
       {isCorrect && currentStreak >= 3 && (
         <p className="mt-2 text-base font-bold text-secondary">
-          🔥 {currentStreak} 連勝中！
+          🔥 {currentStreak} <ZhuyinText>連勝中！</ZhuyinText>
         </p>
       )}
 
       {streakReward > 0 && (
         <div className="streak-reward mt-3 rounded-xl border-2 border-yellow-400 bg-yellow-100 px-4 py-3 text-center">
           <p className="text-lg font-extrabold text-yellow-800">
-            ⚡ {STREAK_REWARD_MESSAGE}
+            ⚡ <ZhuyinText>{STREAK_REWARD_MESSAGE}</ZhuyinText>
           </p>
           <p className="text-sm font-semibold text-yellow-700">
-            獲得額外 🪙 {streakReward} 金幣！
+            <ZhuyinText>獲得額外</ZhuyinText> 🪙 {streakReward} <ZhuyinText>金幣！</ZhuyinText>
           </p>
         </div>
       )}
 
       {!isCorrect && (
         <p className="mt-3 text-base font-semibold">
-          正確答案：<span className="text-green-700">{correctAnswer}</span>
+          <ZhuyinText>正確答案：</ZhuyinText>
+          <span className="text-green-700">
+            <ZhuyinText>{correctAnswer}</ZhuyinText>
+          </span>
         </p>
       )}
 
       <div className="mt-4 rounded-xl bg-white/70 p-4">
-        <p className="text-sm font-bold text-muted">💡 詳解</p>
-        <p className="mt-1 text-base leading-relaxed">{explanation}</p>
+        <p className="text-sm font-bold text-muted">💡 <ZhuyinText>詳解</ZhuyinText></p>
+        <p className="mt-1 text-base leading-relaxed">
+          <ZhuyinText>{explanation}</ZhuyinText>
+        </p>
       </div>
 
       <div className="mt-6">
@@ -448,7 +475,15 @@ export function FeedbackPanel({
               : "border-secondary bg-secondary text-white hover:opacity-90"
           }`}
         >
-          {isLast ? "查看結果 🏆" : "下一題 →"}
+          {isLast ? (
+            <>
+              <ZhuyinText>查看結果</ZhuyinText> 🏆
+            </>
+          ) : (
+            <>
+              <ZhuyinText>下一題</ZhuyinText> →
+            </>
+          )}
         </button>
       </div>
     </div>

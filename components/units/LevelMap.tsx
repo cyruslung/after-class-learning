@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { LevelMapNode } from "@/lib/levelProgress";
 import { renderStars } from "@/lib/game";
+import { ZhuyinText } from "@/components/ZhuyinText";
 
 interface LevelMapProps {
   levels: LevelMapNode[];
@@ -8,12 +9,18 @@ interface LevelMapProps {
 
 export function LevelMap({ levels }: LevelMapProps) {
   if (levels.length === 0) {
-    return <p className="text-sm text-muted">尚無關卡</p>;
+    return (
+      <p className="text-sm text-muted">
+        <ZhuyinText>尚無關卡</ZhuyinText>
+      </p>
+    );
   }
 
   return (
     <div className="mt-6">
-      <p className="mb-4 text-center text-sm font-semibold text-muted">🗺️ 闖關地圖</p>
+      <p className="mb-4 text-center text-sm font-semibold text-muted">
+        🗺️ <ZhuyinText>闖關地圖</ZhuyinText>
+      </p>
       <div className="relative flex flex-col items-center gap-0 py-4">
         {levels.map((level, idx) => (
           <div key={level.id} className="flex flex-col items-center">
@@ -64,19 +71,23 @@ function LevelNode({ level }: { level: LevelMapNode }) {
         <Link href={`/game/${level.id}`} className="group flex flex-col items-center">
           {nodeContent}
           <span className="mt-2 max-w-[8rem] text-center text-sm font-bold text-foreground group-hover:text-primary">
-            {level.name}
+            <ZhuyinText>{level.name}</ZhuyinText>
           </span>
           {!level.completed && (
-            <span className="text-xs font-semibold text-primary">開始闖關</span>
+            <span className="text-xs font-semibold text-primary">
+              <ZhuyinText>開始闖關</ZhuyinText>
+            </span>
           )}
         </Link>
       ) : (
         <div className="flex flex-col items-center">
           {nodeContent}
           <span className="mt-2 max-w-[8rem] text-center text-sm font-semibold text-muted">
-            {level.name}
+            <ZhuyinText>{level.name}</ZhuyinText>
           </span>
-          <span className="text-xs text-muted">完成前一關解鎖</span>
+          <span className="text-xs text-muted">
+            <ZhuyinText>完成前一關解鎖</ZhuyinText>
+          </span>
         </div>
       )}
     </div>

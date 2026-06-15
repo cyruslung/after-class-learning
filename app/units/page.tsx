@@ -1,12 +1,15 @@
 import { BackLink } from "@/components/BackLink";
 import { BigButton } from "@/components/BigButton";
 import { PageTitle } from "@/components/PageTitle";
+import { ZhuyinText } from "@/components/ZhuyinText";
 import { LevelMap } from "@/components/units/LevelMap";
 import { DEMO_USER_ID, GRADE_OPTIONS, SEMESTER_OPTIONS, SUBJECT_OPTIONS } from "@/lib/constants";
 import { renderStars } from "@/lib/game";
 import { buildLevelMap } from "@/lib/levelProgress";
 import { prisma } from "@/lib/prisma";
 import { TRACK_EARLY_ADMISSION, appendTrack, filterUnitsByTrack, getTrackLabel } from "@/lib/unitTrack";
+
+export const dynamic = "force-dynamic";
 
 interface PageProps {
   searchParams: Promise<{ grade?: string; semester?: string; subject?: string; track?: string }>;
@@ -68,14 +71,18 @@ export default async function UnitsPage({ searchParams }: PageProps) {
       {units.length === 0 ? (
         <div className="rounded-2xl border-2 border-dashed border-orange-200 bg-white p-8 text-center">
           <p className="text-lg text-muted">
-            {track === TRACK_EARLY_ADMISSION
-              ? "此科目尚無提早入學練習單元"
-              : "這個年級/學期/科目還沒有單元資料"}
+            <ZhuyinText>
+              {track === TRACK_EARLY_ADMISSION
+                ? "此科目尚無提早入學練習單元"
+                : "這個年級/學期/科目還沒有單元資料"}
+            </ZhuyinText>
           </p>
           <p className="mt-2 text-sm text-muted">
-            {track === TRACK_EARLY_ADMISSION
-              ? "請執行 npm run db:seed 匯入題庫"
-              : "請到後台匯入題庫，或選擇其他年級試試看！"}
+            <ZhuyinText>
+              {track === TRACK_EARLY_ADMISSION
+                ? "請執行 npm run db:seed 匯入題庫"
+                : "請到後台匯入題庫，或選擇其他年級試試看！"}
+            </ZhuyinText>
           </p>
           <div className="mt-4">
             <BigButton href="/admin/import" variant="outline">
@@ -99,11 +106,16 @@ export default async function UnitsPage({ searchParams }: PageProps) {
                 key={unit.id}
                 className="rounded-2xl border-2 border-orange-200 bg-white p-5 shadow-sm sm:p-6"
               >
-                <h2 className="text-xl font-bold text-foreground">{unit.name}</h2>
-                <p className="mt-1 text-sm text-muted sm:text-base">{unit.description}</p>
+                <h2 className="text-xl font-bold text-foreground">
+                  <ZhuyinText>{unit.name}</ZhuyinText>
+                </h2>
+                <p className="mt-1 text-sm text-muted sm:text-base">
+                  <ZhuyinText>{unit.description}</ZhuyinText>
+                </p>
                 <div className="mt-3 flex flex-wrap items-center gap-4 text-sm sm:text-base">
                   <span className="rounded-full bg-blue-100 px-3 py-1 font-semibold text-blue-700">
-                    已完成 {completedLevels}/{unit.levels.length} 關
+                    <ZhuyinText>已完成</ZhuyinText> {completedLevels}/{unit.levels.length}{" "}
+                    <ZhuyinText>關</ZhuyinText>
                   </span>
                   <span className="text-lg">{renderStars(totalStars > 3 ? 3 : totalStars)}</span>
                 </div>

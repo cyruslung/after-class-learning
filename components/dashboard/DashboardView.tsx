@@ -2,6 +2,7 @@ import Link from "next/link";
 import { BackLink } from "@/components/BackLink";
 import { BigButton } from "@/components/BigButton";
 import { PageTitle } from "@/components/PageTitle";
+import { ZhuyinText } from "@/components/ZhuyinText";
 import { renderStars } from "@/lib/game";
 import type { DashboardData } from "@/lib/dashboard";
 
@@ -21,7 +22,9 @@ export function DashboardView({ data }: DashboardViewProps) {
 
       {/* 總覽 */}
       <section className="mb-8">
-        <h2 className="mb-4 text-lg font-bold">今日學習總覽</h2>
+        <h2 className="mb-4 text-lg font-bold">
+          <ZhuyinText>今日學習總覽</ZhuyinText>
+        </h2>
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
           <OverviewCard
             emoji="🎯"
@@ -42,7 +45,9 @@ export function DashboardView({ data }: DashboardViewProps) {
       {/* 建議複習 */}
       {data.suggestedUnits.length > 0 && (
         <section className="mb-8">
-          <h2 className="mb-4 text-lg font-bold">💡 建議複習單元</h2>
+          <h2 className="mb-4 text-lg font-bold">
+            <ZhuyinText>建議複習單元</ZhuyinText>
+          </h2>
           <div className="space-y-3">
             {data.suggestedUnits.map((item) => (
               <Link
@@ -52,11 +57,15 @@ export function DashboardView({ data }: DashboardViewProps) {
               >
                 <div>
                   <p className="font-bold">
-                    {item.subjectName} · {item.unitName}
+                    <ZhuyinText>{item.subjectName}</ZhuyinText> · <ZhuyinText>{item.unitName}</ZhuyinText>
                   </p>
-                  <p className="text-sm text-muted">{item.reason}</p>
+                  <p className="text-sm text-muted">
+                    <ZhuyinText>{item.reason}</ZhuyinText>
+                  </p>
                 </div>
-                <span className="text-sm font-semibold text-primary">前往 →</span>
+                <span className="text-sm font-semibold text-primary">
+                  <ZhuyinText>前往</ZhuyinText> →
+                </span>
               </Link>
             ))}
           </div>
@@ -65,7 +74,9 @@ export function DashboardView({ data }: DashboardViewProps) {
 
       {/* 科目進度 */}
       <section className="mb-8">
-        <h2 className="mb-4 text-lg font-bold">各科完成進度</h2>
+        <h2 className="mb-4 text-lg font-bold">
+          <ZhuyinText>各科完成進度</ZhuyinText>
+        </h2>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           {data.subjects.map((subject) => (
             <div
@@ -74,14 +85,17 @@ export function DashboardView({ data }: DashboardViewProps) {
             >
               <div className="mb-2 flex items-center gap-2">
                 <span className="text-2xl">{subject.emoji}</span>
-                <span className="text-lg font-bold">{subject.name}</span>
+                <span className="text-lg font-bold">
+                  <ZhuyinText>{subject.name}</ZhuyinText>
+                </span>
               </div>
               <p className="mb-2 text-2xl font-extrabold text-primary">
                 {subject.completionRate}%
               </p>
               <ProgressBar percent={subject.completionRate} />
               <p className="mt-2 text-sm text-muted">
-                已完成 {subject.completedLevels} / {subject.totalLevels} 關
+                <ZhuyinText>已完成</ZhuyinText> {subject.completedLevels} / {subject.totalLevels}{" "}
+                <ZhuyinText>關</ZhuyinText>
               </p>
             </div>
           ))}
@@ -90,9 +104,13 @@ export function DashboardView({ data }: DashboardViewProps) {
 
       {/* 單元進度 */}
       <section className="mb-8">
-        <h2 className="mb-4 text-lg font-bold">各單元學習狀況</h2>
+        <h2 className="mb-4 text-lg font-bold">
+          <ZhuyinText>各單元學習狀況</ZhuyinText>
+        </h2>
         {data.units.length === 0 ? (
-          <p className="text-muted">尚無單元資料</p>
+          <p className="text-muted">
+            <ZhuyinText>尚無單元資料</ZhuyinText>
+          </p>
         ) : (
           <div className="space-y-4">
             {data.units.map((unit) => {
@@ -109,10 +127,13 @@ export function DashboardView({ data }: DashboardViewProps) {
                   <div className="flex flex-wrap items-start justify-between gap-2">
                     <div>
                       <div className="flex flex-wrap items-center gap-2">
-                        <h3 className="text-lg font-bold">{unit.name}</h3>
+                        <h3 className="text-lg font-bold">
+                          <ZhuyinText>{unit.name}</ZhuyinText>
+                        </h3>
                         <SubjectTag name={unit.subjectName} />
                         <span className="rounded-full bg-gray-100 px-2 py-0.5 text-xs font-semibold text-muted">
-                          {unit.gradeName} · {unit.semester === "S1" ? "上學期" : "下學期"}
+                          <ZhuyinText>{unit.gradeName}</ZhuyinText> ·{" "}
+                          <ZhuyinText>{unit.semester === "S1" ? "上學期" : "下學期"}</ZhuyinText>
                         </span>
                       </div>
                     </div>
@@ -133,7 +154,9 @@ export function DashboardView({ data }: DashboardViewProps) {
 
                   <div className="mt-3">
                     <ProgressBar percent={completionPercent} />
-                    <p className="mt-1 text-xs text-muted">完成 {completionPercent}%</p>
+                    <p className="mt-1 text-xs text-muted">
+                      <ZhuyinText>完成</ZhuyinText> {completionPercent}%
+                    </p>
                   </div>
 
                   <div className="mt-3">
@@ -141,7 +164,7 @@ export function DashboardView({ data }: DashboardViewProps) {
                       href={`/units?grade=${unit.gradeCode}&semester=${unit.semester}&subject=${unit.subject}`}
                       className="text-sm font-semibold text-primary hover:underline"
                     >
-                      查看闖關地圖 →
+                      <ZhuyinText>查看闖關地圖</ZhuyinText> →
                     </Link>
                   </div>
                 </div>
@@ -154,17 +177,21 @@ export function DashboardView({ data }: DashboardViewProps) {
       {/* 錯題提醒 */}
       <section className="mb-8">
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-lg font-bold">錯題提醒</h2>
+          <h2 className="text-lg font-bold">
+            <ZhuyinText>錯題提醒</ZhuyinText>
+          </h2>
           {data.wrongAnswers.length > 0 && (
             <Link href="/review" className="text-sm font-semibold text-primary hover:underline">
-              查看全部 →
+              <ZhuyinText>查看全部</ZhuyinText> →
             </Link>
           )}
         </div>
 
         {data.wrongAnswers.length === 0 ? (
           <div className="rounded-2xl border-2 border-dashed border-green-200 bg-green-50 p-6 text-center">
-            <p className="text-lg font-bold text-green-700">🎉 目前沒有待複習的錯題！</p>
+            <p className="text-lg font-bold text-green-700">
+              🎉 <ZhuyinText>目前沒有待複習的錯題！</ZhuyinText>
+            </p>
           </div>
         ) : (
           <div className="space-y-3">
@@ -174,12 +201,20 @@ export function DashboardView({ data }: DashboardViewProps) {
                 className="rounded-2xl border-2 border-red-100 bg-white p-4 sm:p-5"
               >
                 <div className="mb-2 flex flex-wrap items-center gap-2">
-                  <span className="text-sm font-semibold text-muted">錯題 {idx + 1}</span>
+                  <span className="text-sm font-semibold text-muted">
+                    <ZhuyinText>錯題</ZhuyinText> {idx + 1}
+                  </span>
                   <SubjectTag name={item.subjectName} />
-                  <span className="text-sm text-muted">{item.unitName}</span>
+                  <span className="text-sm text-muted">
+                    <ZhuyinText>{item.unitName}</ZhuyinText>
+                  </span>
                 </div>
-                <p className="font-bold leading-relaxed">{item.prompt}</p>
-                <p className="mt-2 text-sm text-muted">💡 {item.explanation}</p>
+                <p className="font-bold leading-relaxed">
+                  <ZhuyinText>{item.prompt}</ZhuyinText>
+                </p>
+                <p className="mt-2 text-sm text-muted">
+                  💡 <ZhuyinText>{item.explanation}</ZhuyinText>
+                </p>
                 <div className="mt-3">
                   <BigButton href="/review" variant="outline">
                     前往複習
@@ -212,8 +247,12 @@ function OverviewCard({
       }`}
     >
       <span className="text-2xl">{emoji}</span>
-      <p className="mt-1 text-xs font-semibold text-muted sm:text-sm">{label}</p>
-      <p className="mt-1 text-lg font-extrabold sm:text-xl">{value}</p>
+      <p className="mt-1 text-xs font-semibold text-muted sm:text-sm">
+        <ZhuyinText>{label}</ZhuyinText>
+      </p>
+      <p className="mt-1 text-lg font-extrabold sm:text-xl">
+        <ZhuyinText>{value}</ZhuyinText>
+      </p>
     </div>
   );
 }
@@ -232,8 +271,12 @@ function ProgressBar({ percent }: { percent: number }) {
 function MiniStat({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-xl bg-orange-50 px-3 py-2">
-      <p className="text-xs font-semibold text-muted">{label}</p>
-      <p className="text-sm font-bold">{value}</p>
+      <p className="text-xs font-semibold text-muted">
+        <ZhuyinText>{label}</ZhuyinText>
+      </p>
+      <p className="text-sm font-bold">
+        <ZhuyinText>{value}</ZhuyinText>
+      </p>
     </div>
   );
 }
@@ -248,7 +291,7 @@ function SubjectTag({ name }: { name: string }) {
     <span
       className={`rounded-full px-2 py-0.5 text-xs font-bold ${colors[name] ?? "bg-gray-100 text-gray-700"}`}
     >
-      {name}
+      <ZhuyinText>{name}</ZhuyinText>
     </span>
   );
 }

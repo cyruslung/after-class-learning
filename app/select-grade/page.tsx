@@ -1,6 +1,7 @@
 import { BackLink } from "@/components/BackLink";
 import { CardButton } from "@/components/CardButton";
 import { PageTitle } from "@/components/PageTitle";
+import { ZhuyinText } from "@/components/ZhuyinText";
 import { EARLY_ADMISSION_ENTRY, GRADE_OPTIONS } from "@/lib/constants";
 import { appendTrack } from "@/lib/unitTrack";
 
@@ -11,7 +12,9 @@ export default function SelectGradePage() {
       <PageTitle emoji="🎓" title="選擇年級" subtitle="請選擇你的年級" />
 
       <section className="mb-8">
-        <h2 className="mb-4 text-lg font-bold text-foreground sm:text-xl">🏫 幼兒園</h2>
+        <h2 className="mb-4 text-lg font-bold text-foreground sm:text-xl">
+          🏫 <ZhuyinText>幼兒園</ZhuyinText>
+        </h2>
         <div className="mb-4">
           <CardButton
             href="/kindergarten/gallery"
@@ -35,7 +38,9 @@ export default function SelectGradePage() {
       </section>
 
       <section className="mb-8">
-        <h2 className="mb-4 text-lg font-bold text-foreground sm:text-xl">🌟 特殊練習</h2>
+        <h2 className="mb-4 text-lg font-bold text-foreground sm:text-xl">
+          🌟 <ZhuyinText>特殊練習</ZhuyinText>
+        </h2>
         <CardButton
           href="/early-admission"
           label={EARLY_ADMISSION_ENTRY.label}
@@ -46,7 +51,9 @@ export default function SelectGradePage() {
       </section>
 
       <section>
-        <h2 className="mb-4 text-lg font-bold text-foreground sm:text-xl">📚 國小</h2>
+        <h2 className="mb-4 text-lg font-bold text-foreground sm:text-xl">
+          📚 <ZhuyinText>國小</ZhuyinText>
+        </h2>
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
           {GRADE_OPTIONS.elementary.map((grade) => (
             <CardButton

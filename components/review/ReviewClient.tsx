@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { BigButton } from "@/components/BigButton";
+import { ZhuyinText } from "@/components/ZhuyinText";
 import { formatAnswerForDisplay } from "@/lib/question";
 import { QuestionType } from "@prisma/client";
 
@@ -47,8 +48,12 @@ export function ReviewClient({ items: initialItems }: ReviewClientProps) {
     return (
       <div className="rounded-2xl border-2 border-dashed border-green-200 bg-green-50 p-8 text-center">
         <div className="text-5xl">🎉</div>
-        <p className="mt-4 text-xl font-bold">太棒了！目前沒有錯題需要複習</p>
-        <p className="mt-2 text-muted">繼續加油，保持全對！</p>
+        <p className="mt-4 text-xl font-bold">
+          <ZhuyinText>太棒了！目前沒有錯題需要複習</ZhuyinText>
+        </p>
+        <p className="mt-2 text-muted">
+          <ZhuyinText>繼續加油，保持全對！</ZhuyinText>
+        </p>
       </div>
     );
   }
@@ -63,28 +68,40 @@ export function ReviewClient({ items: initialItems }: ReviewClientProps) {
           }`}
         >
           <div className="mb-2 flex items-center justify-between">
-            <span className="text-sm font-semibold text-muted">錯題 {idx + 1}</span>
+            <span className="text-sm font-semibold text-muted">
+              <ZhuyinText>錯題</ZhuyinText> {idx + 1}
+            </span>
             {item.reviewed && (
               <span className="rounded-full bg-green-100 px-2 py-0.5 text-xs font-bold text-green-700">
-                已複習
+                <ZhuyinText>已複習</ZhuyinText>
               </span>
             )}
           </div>
-          <p className="text-lg font-bold">{item.question.prompt}</p>
+          <p className="text-lg font-bold">
+            <ZhuyinText>{item.question.prompt}</ZhuyinText>
+          </p>
           <div className="mt-3 space-y-1 text-sm sm:text-base">
             <p>
-              你的答案：
+              <ZhuyinText>你的答案：</ZhuyinText>
               <span className="ml-1 font-semibold text-red-600">
-                {item.userAnswer || "（未作答）"}
+                {item.userAnswer ? (
+                  <ZhuyinText>{item.userAnswer}</ZhuyinText>
+                ) : (
+                  <ZhuyinText>（未作答）</ZhuyinText>
+                )}
               </span>
             </p>
             <p>
-              正確答案：
+              <ZhuyinText>正確答案：</ZhuyinText>
               <span className="ml-1 font-semibold text-green-600">
-                {formatAnswerForDisplay(item.question.type, item.question.answer)}
+                <ZhuyinText>
+                  {formatAnswerForDisplay(item.question.type, item.question.answer)}
+                </ZhuyinText>
               </span>
             </p>
-            <p className="text-muted">💡 {item.question.explanation}</p>
+            <p className="text-muted">
+              💡 <ZhuyinText>{item.question.explanation}</ZhuyinText>
+            </p>
           </div>
           {!item.reviewed && (
             <div className="mt-4">

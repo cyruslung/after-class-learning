@@ -7,6 +7,8 @@ import {
   isEarlyAdmissionUnit,
 } from "@/lib/unitTrack";
 
+export const dynamic = "force-dynamic";
+
 interface PageProps {
   params: Promise<{ levelId: string }>;
 }

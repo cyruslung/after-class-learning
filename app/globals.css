@@ -80,3 +80,17 @@ body {
 .feedback-panel {
   animation: badge-in 0.3s ease-out forwards;
 }
+
+.zhuyin-ruby {
+  ruby-position: over;
+  ruby-align: center;
+}
+
+.zhuyin-ruby rt {
+  font-size: 0.42em;
+  font-weight: 700;
+  color: #7b68a6;
+  letter-spacing: 0;
+  line-height: 1.1;
+  user-select: none;
+}

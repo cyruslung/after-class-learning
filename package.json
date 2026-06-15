@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "postinstall": "prisma generate",
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
     "db:generate": "prisma generate",
@@ -12,7 +13,8 @@
     "db:seed": "tsx prisma/seed.ts",
     "db:setup": "prisma generate && prisma db push && tsx prisma/seed.ts",
     "tcool:download": "tsx scripts/tcool-download.ts",
-    "tcool:import": "tsx scripts/tcool-import.ts"
+    "tcool:import": "tsx scripts/tcool-import.ts",
+    "bank:validate": "tsx scripts/validate-question-bank.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
@@ -20,6 +22,8 @@
   "dependencies": {
     "@prisma/client": "^6.9.0",
     "next": "^15.3.3",
+    "pinyin-pro": "^3.28.1",
+    "pinyin-to-zhuyin": "^1.1.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },

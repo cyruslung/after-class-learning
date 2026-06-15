@@ -4,6 +4,8 @@ import { PageTitle } from "@/components/PageTitle";
 import { CURRICULUM_SOURCES } from "@/data/questionBank";
 import { prisma } from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminPage() {
   const [unitCount, levelCount, questionCount] = await Promise.all([
     prisma.unit.count(),

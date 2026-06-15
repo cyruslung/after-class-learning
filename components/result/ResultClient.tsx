@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { BigButton } from "@/components/BigButton";
+import { ZhuyinText } from "@/components/ZhuyinText";
 import { BackLink } from "@/components/BackLink";
 import {
   getBadge,
@@ -58,15 +59,23 @@ export function ResultClient({
   return (
     <div>
       <div className="mb-6 text-center">
-        <p className="text-sm font-semibold text-muted">{levelName}</p>
-        <h1 className="mt-2 text-2xl font-extrabold sm:text-3xl">🎊 闖關結果</h1>
+        <p className="text-sm font-semibold text-muted">
+          <ZhuyinText>{levelName}</ZhuyinText>
+        </p>
+        <h1 className="mt-2 text-2xl font-extrabold sm:text-3xl">
+          🎊 <ZhuyinText>闖關結果</ZhuyinText>
+        </h1>
       </div>
 
       {/* Badge */}
       <div className="result-badge mb-6 flex flex-col items-center rounded-2xl border-2 border-yellow-300 bg-gradient-to-b from-yellow-50 to-orange-50 p-6 text-center">
         <span className="text-6xl sm:text-7xl">{badge.emoji}</span>
-        <p className="mt-3 text-xl font-extrabold text-foreground">{badge.title}</p>
-        <p className="mt-1 text-sm text-muted">{badge.description}</p>
+        <p className="mt-3 text-xl font-extrabold text-foreground">
+          <ZhuyinText>{badge.title}</ZhuyinText>
+        </p>
+        <p className="mt-1 text-sm text-muted">
+          <ZhuyinText>{badge.description}</ZhuyinText>
+        </p>
       </div>
 
       {/* Stars animation */}
@@ -86,7 +95,7 @@ export function ResultClient({
 
       {/* Encouragement */}
       <p className="mb-6 text-center text-lg font-bold text-primary sm:text-xl">
-        {encouragement}
+        <ZhuyinText>{encouragement}</ZhuyinText>
       </p>
 
       {/* Stats */}
@@ -100,25 +109,35 @@ export function ResultClient({
       {/* Wrong answers */}
       {wrongAnswers.length > 0 && (
         <section className="mb-8">
-          <h2 className="mb-4 text-xl font-bold">❌ 錯題回顧（{wrongAnswers.length} 題）</h2>
+          <h2 className="mb-4 text-xl font-bold">
+            ❌ <ZhuyinText>錯題回顧</ZhuyinText>（{wrongAnswers.length} <ZhuyinText>題</ZhuyinText>）
+          </h2>
           <div className="space-y-3">
             {wrongAnswers.map((wa, idx) => (
               <div
                 key={wa.questionId}
                 className="rounded-2xl border-2 border-red-200 bg-white p-4 sm:p-5"
               >
-                <p className="text-sm font-semibold text-muted">錯題 {idx + 1}</p>
-                <p className="mt-1 font-bold">{wa.prompt}</p>
+                <p className="text-sm font-semibold text-muted">
+                  <ZhuyinText>錯題</ZhuyinText> {idx + 1}
+                </p>
+                <p className="mt-1 font-bold">
+                  <ZhuyinText>{wa.prompt}</ZhuyinText>
+                </p>
                 <p className="mt-2 text-sm">
-                  你的答案：
+                  <ZhuyinText>你的答案：</ZhuyinText>
                   <span className="font-semibold text-red-600">
-                    {wa.userAnswer || "（未作答）"}
+                    {wa.userAnswer ? (
+                      <ZhuyinText>{wa.userAnswer}</ZhuyinText>
+                    ) : (
+                      <ZhuyinText>（未作答）</ZhuyinText>
+                    )}
                   </span>
                 </p>
                 <p className="text-sm">
-                  正確答案：
+                  <ZhuyinText>正確答案：</ZhuyinText>
                   <span className="font-semibold text-green-600">
-                    {formatAnswerForDisplay(wa.type, wa.answer)}
+                    <ZhuyinText>{formatAnswerForDisplay(wa.type, wa.answer)}</ZhuyinText>
                   </span>
                 </p>
               </div>
@@ -149,7 +168,9 @@ export function ResultClient({
 function StatCard({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-2xl border-2 border-orange-200 bg-white p-4 text-center shadow-sm">
-      <p className="text-sm font-semibold text-muted">{label}</p>
+      <p className="text-sm font-semibold text-muted">
+        <ZhuyinText>{label}</ZhuyinText>
+      </p>
       <p className="mt-1 text-xl font-extrabold sm:text-2xl">{value}</p>
     </div>
   );

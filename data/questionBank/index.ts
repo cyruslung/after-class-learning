@@ -1,6 +1,7 @@
 import type { BankUnit } from "./types";
 import { kindergartenUnits } from "./kindergarten";
 import { elementaryKangHsuanUnits } from "./elementary";
+import { expansionUnits } from "./expansion";
 import { officialTcoolUnits } from "./official-tcool";
 import { xinbeiCharacterUnits } from "./xinbei-characters";
 import { xinbeiExamUnits } from "./xinbei-exams";
@@ -20,6 +21,7 @@ export { kindergartenUnits } from "./kindergarten";
 export { elementaryKangHsuanUnits } from "./elementary";
 export { xinbeiCharacterUnits } from "./xinbei-characters";
 export { xinbeiExamUnits } from "./xinbei-exams";
+export { expansionUnits } from "./expansion";
 export { officialTcoolUnits } from "./official-tcool";
 
 export const ALL_CURRICULUM_UNITS: BankUnit[] = [
@@ -28,6 +30,7 @@ export const ALL_CURRICULUM_UNITS: BankUnit[] = [
   ...xinbeiCharacterUnits,
   ...xinbeiExamUnits,
   ...officialTcoolUnits,
+  ...expansionUnits,
 ];
 
 export const CURRICULUM_SOURCES = [

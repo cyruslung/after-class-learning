@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { QuestionType } from "@prisma/client";
 import { BigButton } from "@/components/BigButton";
+import { ZhuyinText } from "@/components/ZhuyinText";
 import { WRONG_MESSAGES, pickRandomMessage } from "@/lib/game";
 import { checkAnswer, formatAnswerForDisplay, parseOptions, type MultipleChoiceOptions } from "@/lib/question";
 import type { ReviewItem } from "./ReviewClient";
@@ -71,9 +72,15 @@ export function ReviewQuizClient({ items: initialItems, sessionLabel }: ReviewQu
       <div className="rounded-2xl border-2 border-dashed border-green-200 bg-green-50 p-8 text-center">
         <div className="text-5xl">🎉</div>
         <p className="mt-4 text-xl font-bold">
-          {reviewedCount > 0 ? `太棒了！已複習 ${reviewedCount} 題錯題` : "複習完成！"}
+          {reviewedCount > 0 ? (
+            <ZhuyinText>{`太棒了！已複習 ${reviewedCount} 題錯題`}</ZhuyinText>
+          ) : (
+            <ZhuyinText>複習完成！</ZhuyinText>
+          )}
         </p>
-        <p className="mt-2 text-muted">繼續加油，保持全對！</p>
+        <p className="mt-2 text-muted">
+          <ZhuyinText>繼續加油，保持全對！</ZhuyinText>
+        </p>
       </div>
     );
   }
@@ -86,23 +93,34 @@ export function ReviewQuizClient({ items: initialItems, sessionLabel }: ReviewQu
   return (
     <div>
       {sessionLabel && (
-        <p className="mb-4 text-center text-sm font-semibold text-muted">{sessionLabel}</p>
+        <p className="mb-4 text-center text-sm font-semibold text-muted">
+          <ZhuyinText>{sessionLabel}</ZhuyinText>
+        </p>
       )}
 
       <div className="mb-4 flex items-center justify-between text-sm font-semibold text-muted">
-        <span>錯題複習</span>
         <span>
-          第 {currentIndex + 1} 題 / 共 {items.length} 題
+          <ZhuyinText>錯題複習</ZhuyinText>
+        </span>
+        <span>
+          第 {currentIndex + 1} <ZhuyinText>題</ZhuyinText> / 共 {items.length}{" "}
+          <ZhuyinText>題</ZhuyinText>
         </span>
       </div>
 
       {phase === "quiz" && (
         <div className="rounded-2xl border-2 border-orange-200 bg-white p-5 sm:p-6">
-          <p className="mb-4 text-lg font-bold leading-relaxed sm:text-xl">{q.prompt}</p>
+          <p className="mb-4 text-lg font-bold leading-relaxed sm:text-xl">
+            <ZhuyinText>{q.prompt}</ZhuyinText>
+          </p>
           <p className="mb-4 text-sm text-muted">
-            上次答案：
+            <ZhuyinText>上次答案：</ZhuyinText>
             <span className="font-semibold text-red-600">
-              {current.userAnswer || "（未作答）"}
+              {current.userAnswer ? (
+                <ZhuyinText>{current.userAnswer}</ZhuyinText>
+              ) : (
+                <ZhuyinText>（未作答）</ZhuyinText>
+              )}
             </span>
           </p>
 
@@ -138,17 +156,25 @@ export function ReviewQuizClient({ items: initialItems, sessionLabel }: ReviewQu
           }`}
         >
           <p className="text-xl font-extrabold sm:text-2xl">
-            {lastCorrect ? "🎉 答對了！已標記為已複習" : `💪 ${pickRandomMessage(WRONG_MESSAGES)}`}
+            {lastCorrect ? (
+              <ZhuyinText>🎉 答對了！已標記為已複習</ZhuyinText>
+            ) : (
+              <>
+                💪 <ZhuyinText>{pickRandomMessage(WRONG_MESSAGES)}</ZhuyinText>
+              </>
+            )}
           </p>
           {!lastCorrect && (
             <>
               <p className="mt-2 font-semibold">
-                正確答案：
+                <ZhuyinText>正確答案：</ZhuyinText>
                 <span className="text-green-700">
-                  {formatAnswerForDisplay(q.type, q.answer)}
+                  <ZhuyinText>{formatAnswerForDisplay(q.type, q.answer)}</ZhuyinText>
                 </span>
               </p>
-              <p className="mt-2 text-sm text-muted">💡 {q.explanation}</p>
+              <p className="mt-2 text-sm text-muted">
+                💡 <ZhuyinText>{q.explanation}</ZhuyinText>
+              </p>
             </>
           )}
           <div className="mt-4">
@@ -177,7 +203,7 @@ function MultipleChoiceReview({
   const choices = parsed?.choices ?? [];
 
   if (choices.length === 0) {
-    return <p className="text-sm text-muted">無法載入選項，請至題庫檢查</p>;
+    return <p className="text-sm text-muted"><ZhuyinText>無法載入選項，請至題庫檢查</ZhuyinText></p>;
   }
 
   return (
@@ -189,7 +215,7 @@ function MultipleChoiceReview({
           onClick={() => onAnswer(choice)}
           className="min-h-[3rem] rounded-2xl border-2 border-blue-200 bg-blue-50 px-4 py-3 text-lg font-bold transition hover:bg-blue-100"
         >
-          {choice}
+          <ZhuyinText>{choice}</ZhuyinText>
         </button>
       ))}
     </div>
@@ -204,14 +230,14 @@ function TrueFalseReview({ onAnswer }: { onAnswer: (answer: string) => void }) {
         onClick={() => onAnswer("true")}
         className="min-h-[3.5rem] rounded-2xl border-2 border-green-200 bg-green-50 text-lg font-bold hover:bg-green-100"
       >
-        ✓ 是
+        ✓ <ZhuyinText>是</ZhuyinText>
       </button>
       <button
         type="button"
         onClick={() => onAnswer("false")}
         className="min-h-[3.5rem] rounded-2xl border-2 border-red-200 bg-red-50 text-lg font-bold hover:bg-red-100"
       >
-        ✗ 否
+        ✗ <ZhuyinText>否</ZhuyinText>
       </button>
     </div>
   );
