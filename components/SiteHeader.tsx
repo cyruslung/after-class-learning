@@ -23,6 +23,12 @@ export function SiteHeader() {
             <ZhuyinText>錯題複習</ZhuyinText>
           </Link>
           <Link
+            href="/writing"
+            className="rounded-full px-3 py-1.5 text-sm font-semibold text-muted transition hover:bg-orange-100 sm:px-4 sm:py-2 sm:text-base"
+          >
+            <ZhuyinText>練字坊</ZhuyinText>
+          </Link>
+          <Link
             href="/admin"
             className="rounded-full px-3 py-1.5 text-sm font-semibold text-muted transition hover:bg-orange-100 sm:px-4 sm:py-2 sm:text-base"
           >

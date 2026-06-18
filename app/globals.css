@@ -94,3 +94,26 @@ body {
   line-height: 1.1;
   user-select: none;
 }
+
+/* 米字格練字背景 */
+.writing-grid::before {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border: 2px dashed #f0c9a0;
+  border-radius: 12px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.writing-grid::after {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  background:
+    linear-gradient(to right, transparent calc(50% - 1px), #fdebd0 calc(50% - 1px), #fdebd0 calc(50% + 1px), transparent calc(50% + 1px)),
+    linear-gradient(to bottom, transparent calc(50% - 1px), #fdebd0 calc(50% - 1px), #fdebd0 calc(50% + 1px), transparent calc(50% + 1px));
+  border-radius: 12px;
+  pointer-events: none;
+  z-index: 0;
+}

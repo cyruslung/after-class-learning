@@ -15,13 +15,20 @@ export default function SelectGradePage() {
         <h2 className="mb-4 text-lg font-bold text-foreground sm:text-xl">
           🏫 <ZhuyinText>幼兒園</ZhuyinText>
         </h2>
-        <div className="mb-4">
+        <div className="mb-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
           <CardButton
             href="/kindergarten/gallery"
             label="注音圖庫"
             description="小一先修完整 37 音 — 看圖學注音"
             emoji="🔤"
             className="border-purple-200 bg-purple-50 hover:bg-purple-100"
+          />
+          <CardButton
+            href="/writing"
+            label="國字練字坊"
+            description="筆順示範、描紅練習、速度挑戰"
+            emoji="✍️"
+            className="border-teal-200 bg-teal-50 hover:bg-teal-100"
           />
         </div>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
